@@ -1,45 +1,48 @@
 package Modules;
 
+import Base.Commonclass;
 import PageObjects.Lookup_PageObjects;
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static PageObjects.Login_Pageobjects.homepage;
 import static PageObjects.Lookup_PageObjects.*;
 
-public class Lookup_Page extends Loginpage {
+public class Lookup_Page extends Commonclass {
 
-    public static void navigatetoLookupPage(){
-
-        driver.findElement(By.xpath(Lookup_xpath)).click();
-
-    }
-
-    public static void Addnewstate(){
-
-        driver.findElement(By.xpath(state_xpath)).click();
-        driver.findElement(By.xpath(Addstate_xpath)).click();
-        driver.findElement(By.xpath(statefield_xpath)).sendKeys("Tamilnaduss");
-        driver.findElement(By.xpath(statecode_xpath)).sendKeys("Tn");
-        driver.findElement(By.xpath(SaveButton_xpath)).click();
+    //This Method is Contains Navigate to Lookup Module
+    public static void NavigatetoLookupPage() {
 
         try{
-            if (driver.getPageSource().contains(Successmsg_xpath)) {
-
-                Assert.assertTrue(true);
-                System.out.println("State Succesfully Added");
-            }
-
-        }catch (Exception e){
-
-            e.getMessage();
+            Thread.sleep(1000);
+            click("xpath", Lookup);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
         }
+    }
+
+    //This Method is Contains Adding New State
+    public static void Addnewstate() throws InterruptedException {
+        try {
+            Wait("xpath",state,driver);
+            click("xpath", state);
+            click("xpath", Addstate);
+            Enter("Xpath", statefield, statename);
+            Enter("xpath", statecode, "Tn");
+            click("xpath", SaveButton);
 
 
-
-
-
-
-
+            if (driver.getPageSource().contains(gettext("xpath", AddedSuccessmsg))) {
+                Assert.assertTrue(true, "State Succesfully Added");
+            }
+        } catch (Exception e) {
+            Assert.assertTrue(false, "State is not Added");
+            e.printStackTrace();
+        }
 
     }
 

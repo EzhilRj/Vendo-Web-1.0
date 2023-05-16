@@ -2,9 +2,12 @@ package PageObjects;
 
 public class Login_Pageobjects {
 
-    public static String username_ID = "input_0";
-    public static String password_ID = "input_1";
-    public static String Login_Xpath = "//*[text()='Login']";
+    public static String username = "input_0";
+    public static String password= "input_1";
+    public static String Loginbutton = "//*[text()='Login']";
+    public static String homepage = "mainhomeli";
+    public static String Error = "//*[@id=\"dialogContent_2\"]/div/p";
+
 
 
 }

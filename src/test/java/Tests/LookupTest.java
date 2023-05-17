@@ -13,7 +13,6 @@ public class LookupTest extends Commonclass {
     @Test(dependsOnMethods ={"Tests.LoginTest.TC001_Login"})
     public static void TC_002NavigatetoLookup() throws InterruptedException {
 
-
         NavigatetoLookupPage();
     }
 

@@ -1,7 +1,6 @@
 package Modules;
 
 import Base.Commonclass;
-import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.Status;
 import org.testng.Assert;
 
@@ -10,10 +9,10 @@ import static Utils.ExtentReportListener.test;
 
 public class Loginpage extends Commonclass {
 
-    public static void LogintoApplication() throws InterruptedException {
+    public static void LogintoApplication(String uname , String pword) throws InterruptedException {
 
-        Enter("id", username, "vendoadmin");
-        Enter("id", password, "Vendo@2022");
+        Enter("id", username, uname);
+        Enter("id", password, pword);
         click("XPATH", Loginbutton);
         Wait("CLASSNAME",homepage,driver);
         try{

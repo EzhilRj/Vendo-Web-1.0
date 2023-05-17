@@ -37,10 +37,10 @@ public class Lookup_Page extends Commonclass {
 
 
             if (driver.getPageSource().contains(gettext("xpath", AddedSuccessmsg))) {
-                Assert.assertTrue(true, "State Succesfully Added");
+                Assert.assertTrue(true, "State Successfully Added");
             }
         } catch (Exception e) {
-            Assert.assertTrue(false, "State is not Added");
+            Assert.fail("State is not Added");
             e.printStackTrace();
         }
 

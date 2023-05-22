@@ -1,35 +1,35 @@
 package Modules;
 
-import Base.Commonclass;
+import Base.Setup;
 import com.aventstack.extentreports.Status;
 import org.testng.Assert;
 
 import static PageObjects.Login_Pageobjects.*;
+import static Utils.Actions.*;
 import static Utils.ExtentReportListener.test;
 
-public class Loginpage extends Commonclass {
+public class Loginpage extends Setup {
 
     public static void LogintoApplication(String uname , String pword) throws InterruptedException {
 
         Enter("id", username, uname);
         Enter("id", password, pword);
         click("XPATH", Loginbutton);
-        Wait("CLASSNAME",homepage,driver);
+        //Wait("CLASSNAME",homepage,driver);
         try{
             if(driver.getPageSource().contains(homepage)){
                 test.log(Status.PASS,"Admin Logged in Successfully");
                 Assert.assertTrue(true);
+
             }else{
-                test.log(Status.FAIL,"Admin Login Failed | Cause : " + gettext("xpath","//*[@id=\"dialogContent_2\"]/div/p"));
-                Assert.assertTrue(false);
+                Thread.sleep(1000);
+                test.log(Status.WARNING,"Admin Login Failed  | Cause : Negative Data is Given " + gettext("xpath","//*[@id=\"dialogContent_2\"]/div/p"));
+                Assert.fail();
             }
 
         }catch (Exception e){
-
             System.out.println(e.getMessage());
-
         }
-
 
     }
 

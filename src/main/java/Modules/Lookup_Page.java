@@ -1,18 +1,12 @@
 package Modules;
 
-import Base.Commonclass;
-import PageObjects.Lookup_PageObjects;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
+import Base.Setup;
 import org.testng.Assert;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static PageObjects.Login_Pageobjects.homepage;
 import static PageObjects.Lookup_PageObjects.*;
+import static Utils.Actions.*;
 
-public class Lookup_Page extends Commonclass {
+public class Lookup_Page extends Setup {
 
     //This Method is Contains Navigate to Lookup Module
     public static void NavigatetoLookupPage() {

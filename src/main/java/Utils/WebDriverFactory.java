@@ -1,12 +1,11 @@
 package Utils;
 
-import Base.Commonclass;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 
-import static Base.Commonclass.driver;
+import static Base.Setup.driver;
 
 public class WebDriverFactory {
 
@@ -14,10 +13,10 @@ public class WebDriverFactory {
 
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver(Commonclass.options);
+            driver = new ChromeDriver();
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver(Commonclass.options);
+            driver = new FirefoxDriver();
         } else {
             throw new IllegalArgumentException("Invalid browser specified");
         }

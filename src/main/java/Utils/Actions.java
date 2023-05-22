@@ -1,59 +1,32 @@
-package Base;
+package Utils;
 
-import Utils.WebDriverFactory;
+import Base.Setup;
 import org.apache.commons.io.FileUtils;
-import org.apache.log4j.Logger;
-import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
-import org.testng.annotations.AfterSuite;
-import org.testng.annotations.BeforeSuite;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import static PageObjects.Lookup_PageObjects.*;
-import static Utils.Constants.*;
+import static PageObjects.Lookup_PageObjects.Masterstatedatas;
+import static Utils.Constants.screenshotPath;
 
-public class Commonclass {
-    public static WebDriver driver;
+public class Actions extends Setup {
+
+
     public static String value;
-    public static ChromeOptions options;
     public static String statename = "Tamilnaduss";
     static String statenameupdated = "Testnaduss1";
 
     public static WebElement element;
-
-    protected static Logger log = Logger.getLogger(Commonclass.class);
-
-    @BeforeSuite
-    public void Startbrowser(){
-        PropertyConfigurator.configure(LogConfigureation);
-        options = new ChromeOptions();
-        options.addArguments("--remote-allow-origins=*");
-        WebDriver driver = WebDriverFactory.createWebDriver(Browser);
-        driver.navigate().to(URL);
-        log.info(URL);
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.manage().window().maximize();
-
-    }
-
-    @AfterSuite(enabled = false)
-    public void Tearbrowser(){
-
-        driver.quit();
-
-    }
 
     public static void click(String attributeName, String attributeValue) {
         String AN = attributeName.toUpperCase();
@@ -176,7 +149,7 @@ public class Commonclass {
 
     }
 
-    public static void Wait(String attributeName, String attributeValue,WebDriver driver){
+    public static void Wait(String attributeName, String attributeValue, WebDriver driver){
 
         String AN = attributeName.toUpperCase();
         switch (AN) {
@@ -186,7 +159,7 @@ public class Commonclass {
                         .pollingEvery(Duration.ofMillis(500))
                         .ignoring(NoSuchElementException.class);
 
-                 element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(attributeValue)));
+                element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id(attributeValue)));
             }
 
             case "XPATH" -> {
@@ -196,7 +169,7 @@ public class Commonclass {
                         .pollingEvery(Duration.ofMillis(500))
                         .ignoring(NoSuchElementException.class);
 
-                 element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(attributeValue)));
+                element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(attributeValue)));
 
             }
             case "CLASSNAME" -> {
@@ -205,7 +178,7 @@ public class Commonclass {
                         .pollingEvery(Duration.ofMillis(500))
                         .ignoring(NoSuchElementException.class);
 
-                 element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(attributeValue)));
+                element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.className(attributeValue)));
             }
             case "CSSSELECTOR" -> {
                 Wait<WebDriver> wait = new FluentWait<>(driver)
@@ -213,7 +186,7 @@ public class Commonclass {
                         .pollingEvery(Duration.ofMillis(500))
                         .ignoring(NoSuchElementException.class);
 
-                 element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(attributeValue)));
+                element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(attributeValue)));
             }
 
             default -> System.out.println("Invalid attribute name specified: " + attributeName + attributeValue);
@@ -234,5 +207,4 @@ public class Commonclass {
         }
 
     }
-
 }

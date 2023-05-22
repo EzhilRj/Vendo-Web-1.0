@@ -17,7 +17,7 @@ import org.testng.annotations.AfterTest;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static Base.Commonclass.driver;
+import static Base.Setup.driver;
 
 public  class ExtentReportListener implements ITestListener {
 

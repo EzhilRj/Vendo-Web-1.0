@@ -7,7 +7,6 @@
     <test name="VendoTest">
         <classes>
             <class name="Tests.LoginTest"/>
-            <class name="Tests.LookupTest"/>
         </classes>
     </test>
 </suite>

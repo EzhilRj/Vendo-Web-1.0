@@ -1,14 +1,14 @@
 package Tests;
 
-import Base.Commonclass;
-import Modules.Lookup_Page;
-import Utils.RetryAnalyser;
+import static Utils.Actions.VerifyActions;
+import static Modules.Lookup_Page.Addnewstate;
+import static Modules.Lookup_Page.NavigatetoLookupPage;
+
 import org.testng.annotations.Test;
 
-import static Base.Commonclass.VerifyActions;
-import static Modules.Lookup_Page.*;
+import Base.Setup;
 
-public class LookupTest extends Commonclass {
+public class LookupTest extends Setup {
 
     @Test(dependsOnMethods ={"Tests.LoginTest.TC001_Login"})
     public static void TC_002NavigatetoLookup() throws InterruptedException {

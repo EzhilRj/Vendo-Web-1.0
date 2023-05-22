@@ -4,6 +4,7 @@ import Utils.WebDriverFactory;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.*;
+import org.testng.ITestContext;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
 
@@ -20,10 +21,13 @@ public class Setup {
     public static WebElement element;
 
     protected static Logger log = Logger.getLogger(Setup.class);
+    private String testSuiteName;
+
 
     @BeforeSuite
-    public void Startbrowser(){
-        PropertyConfigurator.configure(LogConfigureation);
+    public void Startbrowser( ){
+      
+        PropertyConfigurator.configure(LogConfiguration);
         WebDriver driver = WebDriverFactory.createWebDriver(Browser);
         driver.navigate().to(URL);
         log.info(URL);

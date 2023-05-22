@@ -24,8 +24,8 @@ public class LoginTest extends Setup {
 
         XLUtils xlutil=new XLUtils(ExcelPath);
 
-        int totalrows=xlutil.getRowCount("Sheet1");
-        int totalcols=xlutil.getCellCount("Sheet1",1);
+        int totalrows=xlutil.getRowCount("Login");
+        int totalcols=xlutil.getCellCount("Login",1);
 
         String loginData[][]=new String[totalrows][totalcols];
 
@@ -33,7 +33,7 @@ public class LoginTest extends Setup {
         {
             for(int j=0;j<totalcols;j++) //0
             {
-                loginData[i-1][j]=xlutil.getCellData("Sheet1", i, j);
+                loginData[i-1][j]=xlutil.getCellData("Login", i, j);
             }
 
         }

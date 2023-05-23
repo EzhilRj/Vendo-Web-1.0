@@ -4,7 +4,7 @@ package Tests;
 import static Modules.Lookup_Page.Addnewstate;
 import static Modules.Lookup_Page.NavigatetoLookupPage;
 import static PageObjects.Lookup_PageObjects.*;
-import static Utils.Actions.VerifyEdit;
+import static Utils.Actions.VerifyActions;
 
 import org.openqa.selenium.By;
 import org.testng.annotations.Test;
@@ -21,13 +21,13 @@ public class LookupTest extends Setup {
 
     @Test(dependsOnMethods = {"TC_002NavigatetoLookup"})
     public static void TC_003VerifystateisAdded() throws InterruptedException {
-    	
+
         Addnewstate();
     }
 
     @Test(dependsOnMethods = {"TC_003VerifystateisAdded"})
     public static void TC_004VerifyActionsinState() throws InterruptedException {
 
-            VerifyEdit(Teststate,"Tamilnaduss",statefield,"Tamil1",UpdatedSuccessmsg);
+            VerifyActions(TestInput,"Tamilnaduss",fieldname,"Tamil1",UpdatedSuccessmsg, Deletesuccessmsg);
     }
 }

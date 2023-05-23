@@ -25,7 +25,7 @@ public class Lookup_Page extends Setup {
             Wait("xpath",state,driver);
             click("xpath", state);
             click("xpath", Addstate);
-            Enter("Xpath", statefield, statename);
+            Enter("Xpath", fieldname, statename);
             Enter("xpath", statecode, "Tn");
             click("xpath", SaveButton);
 

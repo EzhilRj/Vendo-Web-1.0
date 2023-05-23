@@ -21,10 +21,9 @@ import static Utils.Constants.screenshotPath;
 
 public class Actions extends Setup {
 
-
     public static String value;
     public static String statename = "Tamilnaduss";
-    static String statenameupdated = "Testnaduss1";
+    static String updatedinput = "Testnaduss1";
 
     public static WebElement element;
 
@@ -98,31 +97,31 @@ public class Actions extends Setup {
         return text;
     }
 
-    public static void VerifyActions() throws InterruptedException {
+    public static void VerifyActions(String attributevalue , String Addedvalue,String field, String updatevalue,String updsuccesmsg, String Delsuccesmsg) throws InterruptedException {
 
-        Wait("xpath", Teststate,driver);
-        value = gettext("xpath", Teststate);
+        Wait("xpath", TestInput,driver);
+        value = gettext("xpath", TestInput);
         if (value.equalsIgnoreCase(statename)) {
             Thread.sleep(1000);
             click("xpath", Editbutton);
-            Enter("xpath", statefield, statenameupdated);
+            Enter("xpath", fieldname, updatedinput);
             click("xpath", SaveButton);
             try {
                 if (driver.getPageSource().contains(gettext("xpath", UpdatedSuccessmsg))) {
                     Thread.sleep(1000);
-                    if (gettext("xpath", Teststate).equals(statenameupdated)) {
-                        Assert.assertTrue(true, "State updated Succesfully");
+                    if (gettext("xpath", TestInput).equals(updatedinput)) {
+                        Assert.assertTrue(true);
                     } else {
-                        Assert.assertTrue(false, "State is not updated");
+                        Assert.assertTrue(false);
                     }
                 }
             } catch (Exception e) {
-                Assert.assertTrue(false, "State is not updated");
+                Assert.assertTrue(false);
                 e.printStackTrace();
             }
         }
-        value = gettext("xpath", Teststate);
-        if (value.equalsIgnoreCase(statenameupdated)) {
+        value = gettext("xpath", TestInput);
+        if (value.equalsIgnoreCase(updatedinput)) {
             click("xpath", Deletebutton);
             click("xpath", YesButton);
 
@@ -134,69 +133,17 @@ public class Actions extends Setup {
                     boolean deleted = true;
                     for (WebElement element : states) {
                         String value = element.getText();
-                        deleted = value.contains(statenameupdated);
+                        deleted = value.contains(updatedinput);
                     }
-                    Assert.assertEquals(deleted, false,"State Deleted Succesfully");
+                    Assert.assertEquals(deleted, false);
                 } else {
-                    Assert.assertEquals(true, false,"State Not deleted");
-                }
-            }catch(Exception e){
-                Assert.assertTrue(false, "State is not Deleted");
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-
-    //This Method is Contains Update,delete Functionalities
-    public static void VerifyEdit(String attributevalue , String Addedvalue,String field, String updatevalue,String updsuccesmsg ) throws InterruptedException {
-
-        Wait("xpath", attributevalue,driver);
-        value = gettext("xpath", attributevalue);
-        if (value.equalsIgnoreCase(Addedvalue)) {
-            Thread.sleep(1000);
-            click("xpath", Editbutton);
-            Enter("xpath", field, updatevalue);
-            click("xpath", SaveButton);
-            try {
-                if (driver.getPageSource().contains(gettext("xpath", updsuccesmsg))) {
-                    Thread.sleep(1000);
-                    if (gettext("xpath", attributevalue).equals(updatevalue)) {
-                        Assert.assertTrue(true);
-                    } else {
-                        Assert.assertTrue(false);
-                    }
-                }
-            } catch (Exception e) {
-                Assert.assertTrue(false);
-                e.printStackTrace();
-            }
-        }
-
-    }
-
-    public static void VerifyDelete(String attributevalue , String Addedvalue,String Delsuccesmsg ){
-
-        value = gettext("xpath", attributevalue);
-        if (value.equalsIgnoreCase(Addedvalue)) {
-            click("xpath", Deletebutton);
-            click("xpath", YesButton);
-
-            try {
-                Wait("xpath", Delsuccesmsg,driver);
-                if (driver.getPageSource().contains(gettext("xpath", Delsuccesmsg))) {
-
-                    Assert.assertTrue(true);
-                } else {
-                    Assert.assertTrue(false);
+                    Assert.assertEquals(true, false);
                 }
             }catch(Exception e){
                 Assert.assertTrue(false);
                 e.printStackTrace();
             }
         }
-
     }
 
     public static void Wait(String attributeName, String attributeValue, WebDriver driver){

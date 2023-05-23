@@ -98,7 +98,6 @@ public class Actions extends Setup {
         return text;
     }
 
-    //This Method is Contains Update,delete Functionalities
     public static void VerifyActions() throws InterruptedException {
 
         Wait("xpath", Teststate,driver);
@@ -143,6 +142,57 @@ public class Actions extends Setup {
                 }
             }catch(Exception e){
                 Assert.assertTrue(false, "State is not Deleted");
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+
+    //This Method is Contains Update,delete Functionalities
+    public static void VerifyEdit(String attributevalue , String Addedvalue,String field, String updatevalue,String updsuccesmsg ) throws InterruptedException {
+
+        Wait("xpath", attributevalue,driver);
+        value = gettext("xpath", attributevalue);
+        if (value.equalsIgnoreCase(Addedvalue)) {
+            Thread.sleep(1000);
+            click("xpath", Editbutton);
+            Enter("xpath", field, updatevalue);
+            click("xpath", SaveButton);
+            try {
+                if (driver.getPageSource().contains(gettext("xpath", updsuccesmsg))) {
+                    Thread.sleep(1000);
+                    if (gettext("xpath", attributevalue).equals(updatevalue)) {
+                        Assert.assertTrue(true);
+                    } else {
+                        Assert.assertTrue(false);
+                    }
+                }
+            } catch (Exception e) {
+                Assert.assertTrue(false);
+                e.printStackTrace();
+            }
+        }
+
+    }
+
+    public static void VerifyDelete(String attributevalue , String Addedvalue,String Delsuccesmsg ){
+
+        value = gettext("xpath", attributevalue);
+        if (value.equalsIgnoreCase(Addedvalue)) {
+            click("xpath", Deletebutton);
+            click("xpath", YesButton);
+
+            try {
+                Wait("xpath", Delsuccesmsg,driver);
+                if (driver.getPageSource().contains(gettext("xpath", Delsuccesmsg))) {
+
+                    Assert.assertTrue(true);
+                } else {
+                    Assert.assertTrue(false);
+                }
+            }catch(Exception e){
+                Assert.assertTrue(false);
                 e.printStackTrace();
             }
         }

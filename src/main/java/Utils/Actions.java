@@ -97,7 +97,7 @@ public class Actions extends Setup {
         return text;
     }
 
-    public static void VerifyActions(String attributevalue , String Addedvalue,String field, String updatevalue,String updsuccesmsg, String Delsuccesmsg) throws InterruptedException {
+    public static void VerifyActions(String attributevalue , String Addedvalue,String fieldname, String updatevalue,String updsuccesmsg, String Delsuccesmsg) throws InterruptedException {
 
         Wait("xpath", TestInput,driver);
         value = gettext("xpath", TestInput);

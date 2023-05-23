@@ -11,9 +11,9 @@ import static Utils.ExtentReportListener.test;
 public class Loginpage extends Setup {
 
     public static void LogintoApplication(String uname , String pword) throws InterruptedException {
-
         Enter("id", username, uname);
         Enter("id", password, pword);
+        test.log(Status.INFO, "TEST DESCRIPTION : " );
         test.log(Status.INFO,"USERNAME : "+uname+ " ; " + "PASSWORD : " +pword);
         click("XPATH", Loginbutton);
         Thread.sleep(1000);

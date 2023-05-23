@@ -16,9 +16,9 @@ import static Utils.ExtentReportListener.test;
 
 public class Setup {
     public static WebDriver driver;
-    public static String value;
-    public static String statename = "Tamilnaduss";
-    static String statenameupdated = "Testnaduss1";
+/*    public static String value;
+    public static String inputName = "Tamilnaduss";
+    static String updatedName = "Testnaduss1";*/
 
     public static WebElement element;
 
@@ -41,12 +41,6 @@ public class Setup {
 
     @AfterSuite(enabled = false)
     public void Tearbrowser(){
-
-
         driver.quit();
-
     }
-
-
-
 }

@@ -23,7 +23,6 @@ public class LookupTest extends Setup {
         Addnewstate();
     }
 
-
     @Test(dependsOnMethods = {"TC_003VerifystateisAdded"})
     public static void TC_004VerifyActionsinState() throws InterruptedException {
     	

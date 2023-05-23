@@ -14,24 +14,22 @@ public class Loginpage extends Setup {
 
         Enter("id", username, uname);
         Enter("id", password, pword);
+        test.log(Status.INFO,"USERNAME : "+uname+ " ; " + "PASSWORD : " +pword);
         click("XPATH", Loginbutton);
-        //Wait("CLASSNAME",homepage,driver);
-        try{
-            if(driver.getPageSource().contains(homepage)){
+        Thread.sleep(1000);
+
+            if(driver.getCurrentUrl().contains("mainhome")){
                 test.log(Status.PASS,"Admin Logged in Successfully");
                 Assert.assertTrue(true);
 
             }else{
-                Thread.sleep(1000);
-                test.log(Status.WARNING,"Admin Login Failed  | Cause : Negative Data is Given " + gettext("xpath","//*[@id=\"dialogContent_5\"]/div"));
+                Wait("xpath","//*[@aria-label=\"Alert Dialog Demo\"]",driver);
+                test.log(Status.WARNING,"Admin Login Failed  | Cause : Negative Data is Given " + gettext("Xpath","//p[@class='ng-binding']"));
                 click("XPATH", GotitButton);
-                Assert.fail();
+                Assert.assertTrue(false);
 
             }
 
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
 
     }
 

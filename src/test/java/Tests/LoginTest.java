@@ -22,21 +22,16 @@ public class LoginTest extends Setup {
     @DataProvider(name="LoginData")
     public Object[][] getData() throws IOException {
 
-
         XLUtils xlutil=new XLUtils();
-
         int totalrows=xlutil.getRowCount("Login");
         int totalcols=xlutil.getCellCount("Login",1);
-
         String loginData[][]=new String[totalrows][totalcols];
-
         for(int i=1;i<=totalrows;i++) //1
         {
             for(int j=0;j<totalcols;j++) //0
             {
                 loginData[i-1][j]=xlutil.getCellData("Login", i, j);
             }
-
         }
 
         return loginData;

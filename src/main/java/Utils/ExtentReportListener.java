@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static Base.Setup.driver;
+import static Base.Setup.testSuiteName;
 
 public  class ExtentReportListener implements ITestListener {
 
@@ -31,7 +32,7 @@ public  class ExtentReportListener implements ITestListener {
         String reportName = "Vendo Automation Report" + timestamp + ".html";
 
         htmlReporter = new ExtentHtmlReporter(System.getProperty("user.dir") + "/src/main/resources/Reports/" + reportName);
-        htmlReporter.config().setDocumentTitle("Automation Report ");
+        htmlReporter.config().setDocumentTitle(testSuiteName+" Report");
         htmlReporter.config().setReportName("Vendo Web Automation");
         htmlReporter.config().setTheme(com.aventstack.extentreports.reporter.configuration.Theme.STANDARD);
 

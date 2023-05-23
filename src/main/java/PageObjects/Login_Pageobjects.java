@@ -10,6 +10,8 @@ public class Login_Pageobjects {
 
     public static String GotitButton = "//*[text()='Got it!']";
 
+    public static String Alert = "//*[@aria-label=\"Alert Dialog Demo\"]";
+
 
 
 }

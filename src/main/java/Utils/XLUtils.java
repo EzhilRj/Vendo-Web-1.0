@@ -32,6 +32,8 @@ public class XLUtils {
             this.path=RegressionExcelpath;
         }else if(testSuiteName.contains("Negative")){
             this.path=NegativeExcelpath;
+        } else if(testSuiteName.contains("Smoke")){
+            this.path=RegressionExcelpath;
         }
     }
 

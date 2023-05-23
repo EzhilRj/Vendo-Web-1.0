@@ -8,6 +8,8 @@ public class Login_Pageobjects {
     public static String homepage = "mainhomeli";
     public static String Error = "//*[@id=\"dialogContent_2\"]/div/p";
 
+    public static String GotitButton = "//*[text()='Got it!']";
+
 
 
 }

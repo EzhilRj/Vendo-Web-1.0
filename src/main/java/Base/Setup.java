@@ -21,12 +21,13 @@ public class Setup {
     public static WebElement element;
 
     protected static Logger log = Logger.getLogger(Setup.class);
-    private String testSuiteName;
+    public static String testSuiteName;
 
 
     @BeforeSuite
-    public void Startbrowser( ){
-      
+    public void Startbrowser(ITestContext context ){
+
+        testSuiteName = context.getSuite().getName();
         PropertyConfigurator.configure(LogConfiguration);
         WebDriver driver = WebDriverFactory.createWebDriver(Browser);
         driver.navigate().to(URL);
@@ -38,6 +39,7 @@ public class Setup {
 
     @AfterSuite(enabled = false)
     public void Tearbrowser(){
+
 
         driver.quit();
 

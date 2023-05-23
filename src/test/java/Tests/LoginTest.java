@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 import java.io.IOException;
 
 import static Modules.Loginpage.LogintoApplication;
-import static Utils.Constants.ExcelPath;
+
 
 public class LoginTest extends Setup {
 
@@ -22,7 +22,8 @@ public class LoginTest extends Setup {
     @DataProvider(name="LoginData")
     public Object[][] getData() throws IOException {
 
-        XLUtils xlutil=new XLUtils(ExcelPath);
+
+        XLUtils xlutil=new XLUtils();
 
         int totalrows=xlutil.getRowCount("Login");
         int totalcols=xlutil.getCellCount("Login",1);

@@ -23,8 +23,10 @@ public class Loginpage extends Setup {
 
             }else{
                 Thread.sleep(1000);
-                test.log(Status.WARNING,"Admin Login Failed  | Cause : Negative Data is Given " + gettext("xpath","//*[@id=\"dialogContent_2\"]/div/p"));
+                test.log(Status.WARNING,"Admin Login Failed  | Cause : Negative Data is Given " + gettext("xpath","//*[@id=\"dialogContent_5\"]/div"));
+                click("XPATH", GotitButton);
                 Assert.fail();
+
             }
 
         }catch (Exception e){

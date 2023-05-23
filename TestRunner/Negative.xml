@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Negative Tests" verbose="0">
+    <listeners>
+        <listener class-name="Utils.ExtentReportListener" />
+    </listeners>
+    <test name="Login">
+        <classes>
+            <class name="Tests.LoginTest"/>
+        </classes>
+    </test>
+</suite>

@@ -11,6 +11,10 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
 
+import static Base.Setup.testSuiteName;
+import static Utils.Constants.NegativeExcelpath;
+import static Utils.Constants.RegressionExcelpath;
+
 public class XLUtils {
 
     public FileInputStream fi;
@@ -22,9 +26,13 @@ public class XLUtils {
     public CellStyle style;
     String path;
 
-    public XLUtils(String path)
-    {
-        this.path=path;
+    public XLUtils() {
+
+        if(testSuiteName.contains("Regression")){
+            this.path=RegressionExcelpath;
+        }else if(testSuiteName.contains("Negative")){
+            this.path=NegativeExcelpath;
+        }
     }
 
     public int getRowCount(String sheetName) throws IOException

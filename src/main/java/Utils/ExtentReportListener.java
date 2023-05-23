@@ -23,7 +23,7 @@ import static Base.Setup.testSuiteName;
 public  class ExtentReportListener implements ITestListener {
 
     private static ExtentReports extent;
-    public static ExtentTest test;
+    public static  ExtentTest test;
     private ExtentHtmlReporter htmlReporter;
 
     @Override

@@ -13,9 +13,9 @@ import static Modules.Loginpage.LogintoApplication;
 public class LoginTest extends Setup {
 
     @Test
-    public static void TC001_Login(String username , String password) throws InterruptedException {
+    public static void TC001_Login() throws InterruptedException {
 
-        LogintoApplication(username,password);
+        LogintoApplication();
 
     }
 

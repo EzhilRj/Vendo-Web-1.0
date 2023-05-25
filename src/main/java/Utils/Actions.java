@@ -3,28 +3,36 @@ package Utils;
 import Base.Setup;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 import org.testng.ITestResult;
 import org.testng.annotations.AfterMethod;
 
+import java.awt.*;
+import java.awt.datatransfer.StringSelection;
+import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import static PageObjects.Lookup_PageObjects.*;
 import static PageObjects.Lookup_PageObjects.Masterstatedatas;
-import static Utils.Constants.screenshotPath;
+import static Utils.Constants.*;
 
 public class Actions extends Setup {
 
+    public static String drpName = "TAMIL NADU";
     public static String value;
     public static String statename = "Tamilnaduss";
     static String updatedinput = "Testnaduss1";
-
+    public static String searchname = "TAMIL NADU";
     public static WebElement element;
 
     public static void click(String attributeName, String attributeValue) {
@@ -39,7 +47,8 @@ public class Actions extends Setup {
         }
     }
 
-    public static void Enter(String attributeName, String attributeValue, String inputText){
+
+    public static void Enter(String attributeName, String attributeValue, String inputText) {
         String AN = attributeName.toUpperCase();
         switch (AN) {
             case "ID" -> {
@@ -70,7 +79,7 @@ public class Actions extends Setup {
         }
     }
 
-    public static String gettext(String attributeName, String attributeValue){
+    public static String gettext(String attributeName, String attributeValue) {
 
         String AN = attributeName.toUpperCase();
         String text = null;
@@ -78,75 +87,27 @@ public class Actions extends Setup {
             case "ID":
                 text = driver.findElement(By.id(attributeValue)).getText();
                 break;
-            case "NAME" :
+            case "NAME":
                 text = driver.findElement(By.name(attributeValue)).getText();
                 break;
             case "XPATH":
                 text = driver.findElement(By.xpath(attributeValue)).getText();
                 break;
             case "CLASSNAME":
-                text =  driver.findElement(By.className(attributeValue)).getText();
+                text = driver.findElement(By.className(attributeValue)).getText();
                 break;
             case "CSSSELECTOR":
-                text =   driver.findElement(By.cssSelector(attributeValue)).getText();
+                text = driver.findElement(By.cssSelector(attributeValue)).getText();
                 break;
-            case "TAGNAME" :
-                text =  driver.findElement(By.tagName(attributeValue)).getText();
+            case "TAGNAME":
+                text = driver.findElement(By.tagName(attributeValue)).getText();
         }
 
         return text;
     }
 
-    public static void VerifyActions(String attributevalue , String Addedvalue,String fieldname, String updatevalue,String updsuccesmsg, String Delsuccesmsg) throws InterruptedException {
 
-        Wait("xpath", TestInput,driver);
-        value = gettext("xpath", TestInput);
-        if (value.equalsIgnoreCase(statename)) {
-            Thread.sleep(1000);
-            click("xpath", Editbutton);
-            Enter("xpath", fieldname, updatedinput);
-            click("xpath", SaveButton);
-            try {
-                if (driver.getPageSource().contains(gettext("xpath", UpdatedSuccessmsg))) {
-                    Thread.sleep(1000);
-                    if (gettext("xpath", TestInput).equals(updatedinput)) {
-                        Assert.assertTrue(true);
-                    } else {
-                        Assert.assertTrue(false);
-                    }
-                }
-            } catch (Exception e) {
-                Assert.assertTrue(false);
-                e.printStackTrace();
-            }
-        }
-        value = gettext("xpath", TestInput);
-        if (value.equalsIgnoreCase(updatedinput)) {
-            click("xpath", Deletebutton);
-            click("xpath", YesButton);
-
-            try {
-                Wait("xpath", Deletesuccessmsg,driver);
-                if (driver.getPageSource().contains(gettext("xpath", Deletesuccessmsg))) {
-                    Wait("xpath", Masterstatedatas,driver);
-                    List<WebElement> states = driver.findElements(By.xpath(Masterstatedatas));
-                    boolean deleted = true;
-                    for (WebElement element : states) {
-                        String value = element.getText();
-                        deleted = value.contains(updatedinput);
-                    }
-                    Assert.assertEquals(deleted, false);
-                } else {
-                    Assert.assertEquals(true, false);
-                }
-            }catch(Exception e){
-                Assert.assertTrue(false);
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static void Wait(String attributeName, String attributeValue, WebDriver driver){
+    public static void Wait(String attributeName, String attributeValue, WebDriver driver) {
 
         String AN = attributeName.toUpperCase();
         switch (AN) {
@@ -189,6 +150,84 @@ public class Actions extends Setup {
             default -> System.out.println("Invalid attribute name specified: " + attributeName + attributeValue);
         }
 
+    }
+
+    public static void VerifyActions(String attributevalue, String Addedvalue, String fieldname, String updatevalue, String updsuccesmsg, String Delsuccesmsg) throws InterruptedException {
+        Wait("xpath", TestInput, driver);
+        value = gettext("xpath", TestInput);
+        if (value.equalsIgnoreCase(statename)) {
+            Thread.sleep(1000);
+            log.info("Updating the added State");
+            click("xpath", Editbutton);
+            Enter("xpath", fieldname, updatedinput);
+            click("xpath", SaveButton);
+            try {
+                if (driver.getPageSource().contains(gettext("xpath", UpdatedSuccessmsg))) {
+                    Thread.sleep(1000);
+                    if (gettext("xpath", TestInput).equals(updatedinput)) {
+                        Assert.assertTrue(true);
+                    } else {
+                        Assert.assertTrue(false);
+                    }
+                }
+            } catch (Exception e) {
+                Assert.assertTrue(false);
+                e.printStackTrace();
+            }
+        }
+        value = gettext("xpath", TestInput);
+        if (value.equalsIgnoreCase(updatedinput)) {
+            click("xpath", Deletebutton);
+            click("xpath", YesButton);
+            try {
+                Wait("xpath", Deletesuccessmsg, driver);
+                if (driver.getPageSource().contains(gettext("xpath", Deletesuccessmsg))) {
+                    Wait("xpath", Masterstatedatas, driver);
+                    List<WebElement> states = driver.findElements(By.xpath(Masterstatedatas));
+                    boolean deleted = true;
+                    log.info("Deleted the added state");
+                    for (WebElement element : states) {
+                        String value = element.getText();
+                        deleted = value.contains(updatedinput);
+                    }
+                    Assert.assertEquals(deleted, false);
+                } else {
+                    Assert.assertEquals(true, false);
+                }
+            } catch (Exception e) {
+                Assert.assertTrue(false);
+                e.printStackTrace();
+            }
+        }
+    }
+
+
+    public static void Dropdown(By ddoptions, By lists) throws InterruptedException {
+        int options = driver.findElements(ddoptions).size();
+        for (int i = 1; i < options; i++) {
+            String ele = driver.findElement(By.xpath("//*[@data-ng-repeat='state in liststate'][" + i + "]")).getText();
+            if (ele.equalsIgnoreCase(drpName)) {
+                driver.findElement(By.xpath("//*[@data-ng-repeat='state in liststate'][" + i + "]")).click();
+                log.info("Given State is Selected in the dropdown");
+                break;
+            }
+        }
+    }
+
+    public static void UploadSampleFile(String excelPath) throws InterruptedException, AWTException {
+        Robot rs = new Robot();
+        rs.delay(2000);
+        StringSelection ss = new StringSelection(excelPath);
+        Toolkit.getDefaultToolkit().getSystemClipboard().setContents(ss, null);
+        rs.keyPress(KeyEvent.VK_CONTROL);
+        rs.keyPress(KeyEvent.VK_V);
+        rs.delay(2000);
+        rs.keyRelease(KeyEvent.VK_CONTROL);
+        rs.keyRelease(KeyEvent.VK_V);
+        log.info("File Location sent !");
+        rs.keyPress(KeyEvent.VK_ENTER);
+        rs.keyRelease(KeyEvent.VK_ENTER);
+        log.info("File uploaded successfully");
     }
 
 

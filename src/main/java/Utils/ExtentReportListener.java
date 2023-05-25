@@ -82,6 +82,7 @@ public  class ExtentReportListener implements ITestListener {
         extent.flush();
     }
 
+
     @AfterTest
     public void tearDown()
     {

@@ -8,6 +8,8 @@ import org.openqa.selenium.*;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
+import org.testng.asserts.Assertion;
+import org.testng.asserts.SoftAssert;
 
 import java.util.concurrent.TimeUnit;
 
@@ -16,15 +18,12 @@ import static Utils.ExtentReportListener.test;
 
 public class Setup {
     public static WebDriver driver;
-/*    public static String value;
-    public static String inputName = "Tamilnaduss";
-    static String updatedName = "Testnaduss1";*/
-
     public static WebElement element;
 
     protected static Logger log = Logger.getLogger(Setup.class);
     public static String testSuiteName;
 
+    public static  SoftAssert softAssert = new SoftAssert();
 
     @BeforeSuite
     public void Startbrowser(ITestContext context ){
@@ -38,8 +37,7 @@ public class Setup {
         driver.manage().window().maximize();
 
     }
-
-    @AfterSuite(enabled = false)
+    @AfterSuite(enabled = true)
     public void Tearbrowser(){
         driver.quit();
     }

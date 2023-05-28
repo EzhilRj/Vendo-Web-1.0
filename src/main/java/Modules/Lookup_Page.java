@@ -1,20 +1,17 @@
 package Modules;
 
 import Base.Setup;
-import Utils.Actions;
 import Utils.Constants;
+import com.aventstack.extentreports.Status;
 import org.openqa.selenium.By;
-import org.openqa.selenium.SearchContext;
-import org.openqa.selenium.WebElement;
 import org.testng.Assert;
 
 import java.awt.*;
-import java.awt.List;
-import java.nio.file.Path;
 
-import static PageObjects.Lookup_PageObjects.*;
+import static UIObjects.Lookup_PageObjects.*;
 import static Utils.Actions.*;
 import static Utils.Constants.*;
+import static Utils.ExtentReportListener.test;
 
 public class Lookup_Page extends Setup {
 
@@ -24,28 +21,35 @@ public class Lookup_Page extends Setup {
         try {
             Thread.sleep(1000);
             click("xpath", Lookup);
+            test.log(Status.PASS,"Successfully Redirected to Lookup Module");
         } catch (Exception e) {
-            System.out.println(e.getMessage());
+            test.log(Status.DEBUG,e.getMessage());
         }
     }
 
     //This Method is Contains Adding New State
-    public static void Addnewstate() throws InterruptedException {
+    public static void Addnewstate(String value) throws InterruptedException {
         try {
             Wait("xpath", state, driver);
             click("xpath", state);
             click("xpath", Addstate);
-            Enter("Xpath", fieldname, statename);
+            Enter("Xpath", statefield, Addedinput);
             Enter("xpath", statecode, "Tn");
             click("xpath", SaveButton);
-
-            if (driver.getPageSource().contains(gettext("xpath", AddedSuccessmsg))) {
-                Assert.assertTrue(true, "State Successfully Added");
+            Thread.sleep(1000);
+            if(Source(value)){
+                test.log(Status.PASS," Testdata : "+Addedinput+" | Testoutput :  "+gettext("xpath",Toastcontent));
+                Assert.assertTrue(true);
+            }else{
+                test.log(Status.FAIL,"Negative Data is Given : Testdata : "+Addedinput+" Testoutput | "+gettext("xpath",Toastcontent));
+                softAssert.assertTrue(false);
             }
+
         } catch (Exception e) {
-            Assert.fail("State is not Added");
+            test.log(Status.DEBUG,e.getMessage());
             e.printStackTrace();
         }
+        softAssert.assertAll();
     }
 
 

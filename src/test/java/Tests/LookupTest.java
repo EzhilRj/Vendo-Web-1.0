@@ -1,46 +1,39 @@
 package Tests;
 
 
-import static Modules.Lookup_Page.SelectDropDown;
 //import static Modules.Lookup_Page.UploadFile;
 import static Modules.Lookup_Page.*;
-import static PageObjects.Lookup_PageObjects.*;
+import static UIObjects.Lookup_PageObjects.*;
 import static Utils.Actions.*;
 import static Utils.Constants.*;
 
-import Utils.Actions;
-import org.apache.commons.math3.analysis.function.Add;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import java.awt.AWTException;
+
 import org.testng.annotations.Test;
 
 import Base.Setup;
 
-import java.awt.*;
-import java.text.CharacterIterator;
-
 public class LookupTest extends Setup {
 
-    @Test(dependsOnMethods = {"Tests.LoginTest.TC001_Login"})
-    public static void TC_002NavigatetoLookup() throws InterruptedException {
+    @Test(dependsOnMethods = {"Tests.LoginTest.TC001_VerifyLoginPage"})
+    public static void TC_002_Navigate_to_Lookup() throws InterruptedException {
 
         NavigatetoLookupPage();
     }
 
-    @Test(dependsOnMethods = {"TC_002NavigatetoLookup"})
-    public static void TC_003VerifystateisAdded() throws InterruptedException {
+    @Test(dependsOnMethods = {"TC_002_Navigate_to_Lookup"})
+    public static void TC_003_Verify_StateisAdded() throws InterruptedException {
 
-        Addnewstate();
+        Addnewstate(stateAddedSuccessmsg);
     }
 
-    @Test(dependsOnMethods = {"TC_003VerifystateisAdded"})
-    public static void TC_004VerifyActionsinState() throws InterruptedException {
+    @Test(dependsOnMethods = {"TC_003_Verify_StateisAdded"})
+    public static void TC_004_VerifyActionsinState() throws InterruptedException {
 
-        VerifyActions(TestInput, "Tamilnaduss", fieldname, "Tamil1", UpdatedSuccessmsg, Deletesuccessmsg);
+        VerifyActions(firstrow, Addedinput,statefield,updatedinput , stateUpdatedSuccessmsg, stateDeletesuccessmsg, stateMasterDatas);
     }
 
-    @Test(dependsOnMethods = {"TC_004VerifyActionsinState"})
+    @Test(dependsOnMethods = {"TC_004_VerifyActionsinState"})
     public static void TC_005SearchAction() throws InterruptedException, AWTException {
         SearchBox();
     }

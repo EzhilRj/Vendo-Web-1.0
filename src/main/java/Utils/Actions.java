@@ -1,12 +1,11 @@
 package Utils;
 
 import Base.Setup;
+import com.aventstack.extentreports.Status;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.*;
-import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.FluentWait;
-import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.testng.Assert;
 import org.testng.ITestResult;
@@ -18,20 +17,18 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
-import static PageObjects.Lookup_PageObjects.*;
-import static PageObjects.Lookup_PageObjects.Masterstatedatas;
+import static UIObjects.Lookup_PageObjects.*;
 import static Utils.Constants.*;
+import static Utils.ExtentReportListener.test;
 
 public class Actions extends Setup {
 
     public static String drpName = "TAMIL NADU";
     public static String value;
-    public static String statename = "Tamilnaduss";
-    static String updatedinput = "Testnaduss1";
+    public static String Addedinput = "Kanchipuram";
+    public static String updatedinput = "Testnaduss1";
     public static String searchname = "TAMIL NADU";
     public static WebElement element;
 
@@ -152,55 +149,68 @@ public class Actions extends Setup {
 
     }
 
-    public static void VerifyActions(String attributevalue, String Addedvalue, String fieldname, String updatevalue, String updsuccesmsg, String Delsuccesmsg) throws InterruptedException {
-        Wait("xpath", TestInput, driver);
-        value = gettext("xpath", TestInput);
-        if (value.equalsIgnoreCase(statename)) {
+    public static void VerifyActions(String firstrowvalue, String Addedvalue, String fieldname, String UpdatedValue, String Updsuccessmsg, String Delsuccesmsg, String MasterDatas) throws InterruptedException {
+
+        Wait("xpath", firstrowvalue, driver);
+        value = gettext("xpath", firstrowvalue);
+        if (value.equalsIgnoreCase(Addedvalue)) {
             Thread.sleep(1000);
             log.info("Updating the added State");
             click("xpath", Editbutton);
             Enter("xpath", fieldname, updatedinput);
             click("xpath", SaveButton);
+            Thread.sleep(1000);
             try {
-                if (driver.getPageSource().contains(gettext("xpath", UpdatedSuccessmsg))) {
+                if((Source(stateUpdatedSuccessmsg))){
+                    test.log(Status.PASS,"EDIT : Testdata : "+updatedinput+" | Testoutput : "+gettext("xpath",Toastcontent));
+                    Assert.assertTrue(true);
+                }else {
                     Thread.sleep(1000);
-                    if (gettext("xpath", TestInput).equals(updatedinput)) {
-                        Assert.assertTrue(true);
-                    } else {
-                        Assert.assertTrue(false);
-                    }
+                    test.log(Status.FAIL,"EDIT : Negative Data is Given | Testdata : "+updatedinput+" | Testoutput : "+gettext("xpath",Toastcontent));
+                    softAssert.assertTrue(false);
                 }
             } catch (Exception e) {
-                Assert.assertTrue(false);
+                test.log(Status.DEBUG,e.getMessage());
                 e.printStackTrace();
-            }
-        }
-        value = gettext("xpath", TestInput);
-        if (value.equalsIgnoreCase(updatedinput)) {
-            click("xpath", Deletebutton);
-            click("xpath", YesButton);
-            try {
-                Wait("xpath", Deletesuccessmsg, driver);
-                if (driver.getPageSource().contains(gettext("xpath", Deletesuccessmsg))) {
-                    Wait("xpath", Masterstatedatas, driver);
-                    List<WebElement> states = driver.findElements(By.xpath(Masterstatedatas));
-                    boolean deleted = true;
-                    log.info("Deleted the added state");
-                    for (WebElement element : states) {
-                        String value = element.getText();
-                        deleted = value.contains(updatedinput);
-                    }
-                    Assert.assertEquals(deleted, false);
-                } else {
-                    Assert.assertEquals(true, false);
-                }
-            } catch (Exception e) {
-                Assert.assertTrue(false);
-                e.printStackTrace();
-            }
-        }
-    }
 
+            }
+        }
+        //Delete Action takes place here
+        try {
+            value = gettext("xpath", firstrowvalue);
+            if (value.equalsIgnoreCase(updatedinput)) {
+                click("xpath", Deletebutton);
+                click("xpath", YesButton);
+                Thread.sleep(2000);
+                if((Source(stateDeletesuccessmsg))){
+                    test.log(Status.PASS,"DELETE : Testdata : "+updatedinput+" | Testoutput : "+gettext("xpath",Toastcontent));
+                    Assert.assertTrue(true);
+                }else {
+                    Thread.sleep(1000);
+                    test.log(Status.FAIL,"DELETE : Negative Data is Given | Testdata :  "+updatedinput+" | Testoutput : "+gettext("xpath",Toastcontent));
+                    softAssert.assertTrue(false);
+                }
+                Wait("xpath", MasterDatas, driver);
+                List<WebElement> datas = driver.findElements(By.xpath(MasterDatas));
+                boolean deleted = true;
+                log.info("Deleted the added value");
+                for (WebElement element : datas) {
+                    String value = element.getText();
+                    deleted = value.contains(updatedinput);
+                    break;
+                }
+                Assert.assertEquals(deleted, false);
+            } else {
+                softAssert.assertTrue(false);
+            }
+        }catch (Exception e) {
+            test.log(Status.DEBUG,e.getMessage());
+            e.printStackTrace();
+        }
+
+        softAssert.assertAll();
+
+    }
 
     public static void Dropdown(By ddoptions, By lists) throws InterruptedException {
         int options = driver.findElements(ddoptions).size();
@@ -241,6 +251,16 @@ public class Actions extends Setup {
 
             FileUtils.copyFile(source, target);
         }
+
+    }
+
+    public static boolean Source(String value){
+
+        if(driver.getPageSource().contains(value)){
+            return true;
+        }
+        return false;
+
 
     }
 }

@@ -13,4 +13,9 @@ public class Constants {
     public static final String webTablerow = "//*[@data-ng-repeat='rowData in currentPageresultData']";
     public static final String tableObj = "//*[@class='table-responsive table-bordered']//tbody//tr//td[2]";
     public static final String noofpages = "//*[@class='pagination-sm pagination ng-isolate-scope ng-not-empty ng-valid']";
+    public static String Toastcontent = "//*[@id=\"app\"]/md-toast/div/span";
+
+
 }
+
+

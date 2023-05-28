@@ -1,22 +1,20 @@
 package Modules;
 
 import Base.Setup;
-import PageObjects.Login_Pageobjects;
 import com.aventstack.extentreports.Status;
-import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
-import static PageObjects.Login_Pageobjects.*;
+import static UIObjects.Login_Pageobjects.*;
 import static Utils.Actions.*;
 import static Utils.ExtentReportListener.test;
 import static Utils.XLUtils.*;
 
 
 public class Loginpage extends Setup {
+
 
     public static void LogintoApplication() throws InterruptedException, IOException, NoSuchFieldException {
 
@@ -26,23 +24,23 @@ public class Loginpage extends Setup {
                 Enter("id", username, login.get("username"));
                 Enter("id", password, login.get("password"));
                 click("XPATH", Loginbutton);
-                test.log(Status.INFO, "USERNAME : " + login.get("username") + " ; " + "PASSWORD : " + login.get("password"));
                 Thread.sleep(1000);
 
-                if (driver.getCurrentUrl().contains("mainhome")) {
-                    test.log(Status.PASS, "Admin Logged in Successfully");
+                if (driver.getCurrentUrl().contains(homepage)) {
+                    test.log(Status.PASS,  " TestData : USERNAME : " + login.get("username") + " :" + "PASSWORD : " + login.get("password")+" | "+ "TestOutput : "+Lgsuccessmsg);
                     softAssert.assertTrue(true);
 
                 } else {
-                    Wait("xpath", "//*[@aria-label=\"Alert Dialog Demo\"]", driver);
-                    test.log(Status.WARNING, "Admin Login Failed  | Cause : Negative Data is Given " + gettext("Xpath", "//p[@class='ng-binding']"));
+                    Wait("xpath", Alert, driver);
+                    test.log(Status.FAIL,  Lgfailedmsg+" | Cause : Negative Data is Given | TestData : USERNAME : " + login.get("username") + " : " + "PASSWORD : " + login.get("password")+" | "+ "TestOutput : "+gettext("Xpath", AlertContent));
                     click("XPATH", GotitButton);
-                    softAssert.fail("Admin login failed.");
+                    softAssert.assertTrue(false,Lgfailedmsg);
                 }
 
             }
         }catch (Exception e) {
-
+            test.log(Status.DEBUG,e.getMessage());
+            e.printStackTrace();
         }
         softAssert.assertAll();
     }

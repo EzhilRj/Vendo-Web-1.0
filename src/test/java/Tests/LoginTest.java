@@ -1,21 +1,18 @@
 package Tests;
 
-import Base.Setup;
-import Utils.XLUtils;
-import org.testng.annotations.DataProvider;
-import org.testng.annotations.Test;
+import static Modules.Loginpage.*;
 
 import java.io.IOException;
-import java.util.List;
 
-import static Modules.Loginpage.LogintoApplication;
-import static Utils.XLUtils.sheet;
+import org.testng.annotations.Test;
+
+import Base.Setup;
 
 
 public class LoginTest extends Setup {
 
     @Test
-    public static void TC001_VerifyLogin() throws InterruptedException, IOException, NoSuchFieldException {
+    public static void TC001_VerifyLoginPage() throws InterruptedException, IOException, NoSuchFieldException {
 
         LogintoApplication();
 

@@ -1,20 +1,17 @@
 package Base;
 
 import Utils.WebDriverFactory;
-import com.aventstack.extentreports.Status;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 import org.openqa.selenium.*;
 import org.testng.ITestContext;
 import org.testng.annotations.AfterSuite;
 import org.testng.annotations.BeforeSuite;
-import org.testng.asserts.Assertion;
 import org.testng.asserts.SoftAssert;
 
 import java.util.concurrent.TimeUnit;
 
 import static Utils.Constants.*;
-import static Utils.ExtentReportListener.test;
 
 public class Setup {
     public static WebDriver driver;
@@ -39,6 +36,8 @@ public class Setup {
     }
     @AfterSuite(enabled = true)
     public void Tearbrowser(){
+
         driver.quit();
+
     }
 }

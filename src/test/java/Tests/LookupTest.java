@@ -3,6 +3,8 @@ package Tests;
 
 //import static Modules.Lookup_Page.UploadFile;
 import static Modules.Lookup_Page.*;
+import static UIObjects.CommonObjects.GetMasterDatas;
+import static UIObjects.CommonObjects.Rowfirstvalue;
 import static UIObjects.Lookup_PageObjects.*;
 import static Utils.Actions.*;
 import static Utils.Constants.*;
@@ -30,17 +32,28 @@ public class LookupTest extends Setup {
     @Test(dependsOnMethods = {"TC_003_Verify_StateisAdded"})
     public static void TC_004_VerifyActionsinState() throws InterruptedException {
 
-        VerifyActions(firstrow, Addedinput,statefield,updatedinput , stateUpdatedSuccessmsg, stateDeletesuccessmsg, stateMasterDatas);
+        VerifyActions(Rowfirstvalue, Addedinput,statefield,updatedinput , stateUpdatedSuccessmsg, stateDeletesuccessmsg, GetMasterDatas);
     }
 
+
     @Test(dependsOnMethods = {"TC_004_VerifyActionsinState"})
-    public static void TC_005SearchAction() throws InterruptedException, AWTException {
+    public static void TC_005_Verify_SearchFilter() throws InterruptedException, AWTException {
+
         SearchBox();
     }
 
-    @Test(dependsOnMethods = {"TC_005SearchAction"})
-    public static void TC_006UploadFile() throws InterruptedException, AWTException {
-        UploadFile(excelPath);
+    @Test(dependsOnMethods = {"TC_005_Verify_SearchFilter"})
+    public static void TC_006_Verify_SamplefileinState() throws InterruptedException{
+
+        DownloadSamplefile();
     }
+
+    @Test(dependsOnMethods = {"TC_006_Verify_SamplefileinState"})
+    public static void TC_007_Verify_UploadState() throws InterruptedException, AWTException {
+
+        UploadState();
+    }
+
+
 
 }

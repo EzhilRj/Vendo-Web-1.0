@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Regression Tests" verbose="0">
+    <!-- Add listeners -->
     <listeners>
         <listener class-name="Utils.ExtentReportListener" />
     </listeners>
+
+    <!-- Define a test -->
     <test name="Login">
+        <!-- Include classes -->
         <classes>
             <class name="Tests.LoginTest"/>
-            <class name="Tests.LookupTest"/>
+            <class name="Tests.LookupTest">
+            </class>
         </classes>
     </test>
 </suite>

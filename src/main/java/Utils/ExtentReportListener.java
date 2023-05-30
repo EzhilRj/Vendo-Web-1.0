@@ -19,6 +19,7 @@ import java.util.Date;
 
 import static Base.Setup.driver;
 import static Base.Setup.testSuiteName;
+import static Utils.Constants.Browser;
 
 public  class ExtentReportListener implements ITestListener {
 
@@ -38,6 +39,7 @@ public  class ExtentReportListener implements ITestListener {
 
         extent = new ExtentReports();
         extent.attachReporter(htmlReporter);
+        extent.setSystemInfo("Browser",Browser);
         extent.setSystemInfo("Host", "localhost");
         extent.setSystemInfo("Environment", "QA");
         extent.setSystemInfo("User", System.getProperty("user.name"));

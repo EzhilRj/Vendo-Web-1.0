@@ -17,35 +17,31 @@ import static Utils.Actions.*;
 import static Utils.ExtentReportListener.test;
 import static Utils.XLUtils.*;
 
-
 public class Loginpage extends Setup {
+
 
     public static void LogintoApplication() throws InterruptedException, IOException, NoSuchFieldException {
 
         log.info("--------------------"+getCurrentMethodName()+ " Method is Started --------------------");
 
         try {
-            List<Map<String, String>> loginDetails = readWriteExcel("Login");
-            for (Map<String, String> login : loginDetails) {
+            Enter("id", username, Getdata("USERNAME"));
+            Enter("id", password, Getdata("PASSWORD"));
+            click("XPATH", Loginbutton);
+            Thread.sleep(600);
+            if (driver.getPageSource().contains(Mainhome)) {
+                Thread.sleep(1000);
+                test.log(Status.PASS,  " TestData : USERNAME : " + Getdata("USERNAME") + " :" + "PASSWORD : " + Getdata("PASSWORD") + " | " + "TestOutput : " +Lgsuccessmsg);
+                log.warn("TestData : USERNAME : " + Getdata("USERNAME") + " :" + "PASSWORD : " +  Getdata("PASSWORD")+" | " + "TestOutput : "+Lgsuccessmsg);
+                Assert.assertTrue(true);
 
-                Enter("id", username, login.get("username"));
-                Enter("id", password, login.get("password"));
-                click("XPATH", Loginbutton);
-                Thread.sleep(600);
-                if (driver.getPageSource().contains(Mainhome)) {
-                    Thread.sleep(1000);
-                    test.log(Status.PASS,  " TestData : USERNAME : " + login.get("username") + " :" + "PASSWORD : " + login.get("password")+" | "+ "TestOutput : "+Lgsuccessmsg);
-                    log.warn(" TestData : USERNAME : " + login.get("username") + " :" + "PASSWORD : " + login.get("password")+" | "+ "TestOutput : "+Lgsuccessmsg);
-                    Assert.assertTrue(true);
-
-                    break;
-                } else if (Source("Alert")) {
-                    test.log(Status.FAIL,  Lgfailedmsg+" | Cause : Negative Data is Given | TestData : USERNAME : " + login.get("username") + " : " + "PASSWORD : " + login.get("password")+" | "+ "TestOutput : "+gettext("Xpath", AlertContent));
-                    log.warn(" TestData : USERNAME : " + login.get("username") + " :" + "PASSWORD : " + login.get("password")+" | "+ "TestOutput : "+" | "+gettext("Xpath", AlertContent));
-                    click("XPATH", GotitButton);
-                    softAssert.fail(Lgfailedmsg);
-                }
+            } else if (Source("Alert")) {
+                test.log(Status.FAIL,  Lgfailedmsg+" | Cause : Negative Data is Given | TestData : USERNAME : " + Getdata("USERNAME") + " : " + "PASSWORD : " + Getdata("PASSWORD")+" | "+ "TestOutput : "+gettext("Xpath", AlertContent));
+                log.warn(" TestData : USERNAME : " + Getdata("USERNAME") + " :" + "PASSWORD : " + Getdata("PASSWORD")+" | "+ "TestOutput : "+" | "+gettext("Xpath", AlertContent));
+                click("XPATH", GotitButton);
+                softAssert.fail(Lgfailedmsg);
             }
+
         }catch (Exception e) {
             test.log(Status.ERROR,e.getMessage());
             log.error(e.getMessage());

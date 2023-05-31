@@ -17,22 +17,17 @@ import static Utils.Constants.RegressionExcelpath;
 
 public class XLUtils {
 
-    public FileInputStream fi;
-    public FileOutputStream fo;
+    public static FileInputStream fi;
     public static XSSFWorkbook workbook;
-    public static XSSFSheet sheet;
-    public XSSFRow row;
-    public XSSFCell cell;
-    public CellStyle style;
-    String path;
-
     private static File file;
+    public static XSSFSheet sheet;
+    public static XSSFRow row;
+    public XSSFCell cell;
 
-    public  static List<Map<String, String>> excelData = new ArrayList<>();
 
+    public static void LoadExcel() throws IOException {
 
-    public static List<Map<String, String>> readWriteExcel(String sheetname) throws EncryptedDocumentException, InvalidFormatException, IOException {
-
+        System.out.println("Loading Excel data...");
         if (testSuiteName.contains("Regression")) {
             file = new File(RegressionExcelpath);
         } else if (testSuiteName.contains("Negative")) {
@@ -40,23 +35,48 @@ public class XLUtils {
         } else if (testSuiteName.contains("Smoke")) {
             file = new File(RegressionExcelpath);
         }
+        fi = new FileInputStream(file);
+        workbook = new XSSFWorkbook(fi);
+        sheet = workbook.getSheet("Login");
+        fi.close();
 
-        FileInputStream inputStream = new FileInputStream(file);
-        Workbook workbook = new XSSFWorkbook(inputStream);
-        Sheet sheet = workbook.getSheet(sheetname);
-        int rowCount = sheet.getLastRowNum();
-        for (int i = 1; i <= rowCount; i++) {
-            Row row = sheet.getRow(0);
-            Map<String, String> rowData = new HashMap<>();
-            for (int j = 0; j < row.getLastCellNum(); j++) {
-                String key = row.getCell(j).getStringCellValue().toLowerCase();
-                String value = sheet.getRow(i).getCell(j).getStringCellValue();
-                rowData.put(key, value);
-            }
-            excelData.add(rowData);
-        }
-        return excelData;
     }
 
+    public static Map<String, Map<String,String>>getDatamap() throws Exception {
+        if (sheet == null) {
+            LoadExcel();
+        }
 
+        Map<String, Map<String,String>> supermap = new HashMap<String, Map<String,String>>();
+        int lastRowNum = sheet.getLastRowNum();
+        int lastColNum = sheet.getRow(0).getLastCellNum();
+        Map<String,String>Mymap = new HashMap<String, String>();
+        for(int i = 0; i <lastRowNum ; i++) {
+            row = sheet.getRow(i);
+            String Keycell  = row.getCell(0).getStringCellValue();
+
+            for (int j = 0; j < lastColNum; j++) {
+                String value = row.getCell(j).getStringCellValue();
+                Mymap.put(value, sheet.getRow(i + 1).getCell(j).getStringCellValue());
+            }
+
+            supermap.put(Keycell, new HashMap<>(Mymap));
+            Mymap.clear();
+        }
+        return supermap;
+    }
+
+    public static String Getdata(String key) throws Exception {
+        Map<String, Map<String, String>> dataMap = getDatamap();
+
+        for (Map.Entry<String, Map<String, String>> entry : dataMap.entrySet()) {
+            Map<String, String> myval = entry.getValue();
+            String retvalue = myval.get(key);
+            if (retvalue != null) {
+                return retvalue;
+            }
+        }
+
+        return null; // or handle the case when the key is not found
+    }
 }

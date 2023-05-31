@@ -39,7 +39,6 @@ public class Actions extends Setup {
     public static WebDriverWait wait;
 
     public static void click(String attributeName, String attributeValue) {
-
         try {
             String AN = attributeName.toUpperCase();
             switch (AN) {
